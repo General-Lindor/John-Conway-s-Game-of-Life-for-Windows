@@ -83,6 +83,7 @@ class board():
 
 class App(tkinter.Label):
     def __init__(self, x, y):
+        self.runBool = True
         
         self.root = tkinter.Tk()
         self.root.configure(background = "black")
@@ -113,8 +114,11 @@ class App(tkinter.Label):
         self.update()
     
     def run(self, s = None):
-        while True:
+        self.root.bind("<Return>", lambda s: self.__setattr__("runBool", False))
+        while self.runBool:
             self.tick()
+        self.runBool = True
+        self.root.bind("<Return>", self.run)
     
     def exit(self, s = None):
         self.root.destroy()
@@ -123,6 +127,7 @@ class App(tkinter.Label):
 while True:
     try:
         os.system("cls")
+        print("After starting new Game, click on the rendered frame and press: \n    -\"a\" for tick\n    -ENTER for auto-tick toggle \n    -ESCAPE for exit\n")
         w = int(input("Enter Width  (in Pixel): "))
         h = int(input("Enter Height (in Pixel): "))
         a = App(w, h)
