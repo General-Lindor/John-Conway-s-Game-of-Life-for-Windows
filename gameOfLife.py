@@ -110,8 +110,10 @@ class App(tkinter.Label):
         self.root.update()
     
     def tick(self, s = None):
+        self.root.unbind("a")
         self.board.tick()
         self.update()
+        self.root.bind("a", self.tick)
     
     def run(self, s = None):
         self.root.bind("<Return>", lambda s: self.__setattr__("runBool", False))
